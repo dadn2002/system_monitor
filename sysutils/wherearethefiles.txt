@@ -1,0 +1,7 @@
+
+Download SysinternalsSuite from microsoft to run it on your pc
+
+Used SysinternalsTools:
+    Handle.exe      # get list of handles data
+    Listdlls.exe    # get list of dlls data
+    netstat -ano    # get local and remote ip of PIDs (Windows Native)
