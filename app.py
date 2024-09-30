@@ -1,15 +1,16 @@
 import streamlit as st
+import os
 
 st.title("Graph Analysis Workflow")
 
-st.write("### Display Graph from HTML File")
+st.write("### Display Graph from graphs/graph.html")
 
-uploaded_file = st.file_uploader("Choose a .html file", type="html")
+html_file_path = "graphs/graph.html"
 
-if uploaded_file is not None:
-    st.write("### Graph Visualization")
-    
-    html_content = uploaded_file.read().decode("utf-8")
+if os.path.exists(html_file_path):
+    with open(html_file_path, "r", encoding="utf-8") as file:
+        html_content = file.read()
+
     st.components.v1.html(html_content, height=600)
 else:
-    st.write("Please upload a .html file to visualize the graph.")
+    st.error(f"File not found: {html_file_path}. Make sure the file exists.")
