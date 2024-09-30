@@ -15,6 +15,10 @@ class Colors:
     CYAN    = "\033[36m"
     WHITE   = "\033[37m"
 
+def wait():
+    debug("press something to continue")    
+    wait = input()
+
 def okay(msg, *args):
     print(Colors.GREEN + "[+] " + msg.format(*args) + Colors.RESET, file=sys.stdout)
 

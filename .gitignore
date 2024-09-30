@@ -8,6 +8,7 @@
 *.zip
 *.exe
 lib/
+graphs/spoon.graphml
 temp.txt
 
 # Byte-compiled / optimized / DLL files
