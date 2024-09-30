@@ -8,6 +8,9 @@
 *.zip
 *.exe
 lib/
+data/dll_data.txt
+data/handle_data.txt
+data/pid_data.txt
 graphs/spoon.graphml
 temp.txt
 
