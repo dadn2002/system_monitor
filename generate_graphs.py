@@ -394,7 +394,7 @@ def generate_directed_pyvis_graph(dataset: list, enable_pids = True, enable_dlls
     okay("  Success")
     return net # For subgraph generation or something
 
-def main() -> None:
+def generate_graphs_main() -> None:
     data = read_dataset()
     #for node in data:
     #    print(node)
@@ -403,4 +403,4 @@ def main() -> None:
 if __name__ == "__main__":
     os.system("cls")
     info(f"Running code in terminal")
-    main()
+    generate_graphs_main()
