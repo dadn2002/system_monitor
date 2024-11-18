@@ -19,18 +19,18 @@ path_to_graphs_folder = r"graphs"
 def setup_arguments_parser() -> None:
     def display_help_and_exit():
         help_message = """
-        Usage: main.py [OPTIONS]
+        Usage: generate_graphs.py [OPTIONS]
 
         Options:
         -help                  Display this help message and exit.
-        -disable_handles       Enable handles processing.
-        -disable_pids          Enable PIDs processing.
+        -disable_handles       Disable handles processing.
+        -disable_pids          Disable PIDs processing.
         -enable_dlls           Enable DLLs processing.
-        -disable_networks      Enable network processing.
+        -disable_networks      Disable network processing.
         -ignore_list           List of processes to ignore (space separated).
         
         Example:
-        python main.py -disable_handles -ignore_list lsass svchost
+        python generate_graphs.py -disable_handles -ignore_list lsass svchost
         """
 
         print(help_message)
