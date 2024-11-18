@@ -72,7 +72,7 @@ def convert_csv_complex_content_to_list(file_path):
 
 def parse_connections(lines):
     connections = []
-    pattern_pids = re.compile(r'(\w+)\s+([\[\]0-9a-fA-F:.]+:\d+)\s+([\[\]0-9a-fA-F:.]:\d|[:]+)\s*(\w+)?\s+(\d+)')
+    pattern_pids = re.compile(r'(\w+)\s+([\[\]0-9a-fA-F:.]+:\d+)\s+([\[\]0-9a-fA-F:.]*:\d*|[*:*]+)\s*(\w+)?\s+(\d+)')
 
     for line in lines:
         match = pattern_pids.match(line.strip())
@@ -321,7 +321,6 @@ def get_handle_data(list_of_pids_with_dll: list):
         warn(f"   Execution failed")
         return
          
-    wait()
     #----------------Formatting the datafile----------------#
 
     info(f"  Filtering and formatting the data obtained")
@@ -330,7 +329,7 @@ def get_handle_data(list_of_pids_with_dll: list):
 
     formatted_data          = []
     handles_to_insert_data  = []
-    pattern_pids            = r"^(.?)\s+pid:\s(\d+)\s*(.*)$"
+    pattern_pids            = r"^(.*?)\s+pid:\s*(\d+)\s*(.*)$"
     pattern_handles         = r"(\w+)\s+([\w.]+(?:\(\d+\))?)\s*(?::\s*(.*))?" #r"(\S+)\s+(\S+)\s+(\S+)?"
     match_found             = False
     ignore_next_handles     = False
@@ -413,9 +412,9 @@ def get_handle_data(list_of_pids_with_dll: list):
     info("  PIDs ignored (Spawned after tasklist and listdlls execution)")
     for process_name, pid, _ in list_of_pids_with_dll:
         missing_pid = True
-        for _, formatted_pid, _, ___ in formatted_data:
+        for __, formatted_pid, ___, ____ in formatted_data:
             #if process_name == 'Registry':
-                #print(process_name, pid, , _, formatted_pid)
+                #print(process_name, pid, _, __, formatted_pid)
             if pid == formatted_pid:
                 missing_pid = False
                 break
@@ -621,4 +620,3 @@ if __name__ == "__main__":
     #for element in list_of_pids_dlls_handles_network:
     #    print(element[0], element[1], "\n" + str(element[2]), "\n" + str(element[3]), "\n" + str(element[4]), "\n\n")
     okay("Execution completed! Closing program.")
-    pass
