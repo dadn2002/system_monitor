@@ -1,3 +1,4 @@
+
 import subprocess
 import time
 import sys
@@ -71,7 +72,7 @@ def convert_csv_complex_content_to_list(file_path):
 
 def parse_connections(lines):
     connections = []
-    pattern_pids = re.compile(r'(\w+)\s+([\[\]0-9a-fA-F:.]+:\d+)\s+([\[\]0-9a-fA-F:.]*:\d*|[*:*]+)\s*(\w+)?\s+(\d+)')
+    pattern_pids = re.compile(r'(\w+)\s+([\[\]0-9a-fA-F:.]+:\d+)\s+([\[\]0-9a-fA-F:.]:\d|[:]+)\s*(\w+)?\s+(\d+)')
 
     for line in lines:
         match = pattern_pids.match(line.strip())
@@ -318,8 +319,9 @@ def get_handle_data(list_of_pids_with_dll: list):
         okay(f"   Data written to {output_handle_data_path}")
     else:
         warn(f"   Execution failed")
-        return 
-    
+        return
+         
+    wait()
     #----------------Formatting the datafile----------------#
 
     info(f"  Filtering and formatting the data obtained")
@@ -328,7 +330,7 @@ def get_handle_data(list_of_pids_with_dll: list):
 
     formatted_data          = []
     handles_to_insert_data  = []
-    pattern_pids            = r"^(.*?)\s+pid:\s*(\d+)\s*(.*)$"
+    pattern_pids            = r"^(.?)\s+pid:\s(\d+)\s*(.*)$"
     pattern_handles         = r"(\w+)\s+([\w.]+(?:\(\d+\))?)\s*(?::\s*(.*))?" #r"(\S+)\s+(\S+)\s+(\S+)?"
     match_found             = False
     ignore_next_handles     = False
@@ -411,9 +413,9 @@ def get_handle_data(list_of_pids_with_dll: list):
     info("  PIDs ignored (Spawned after tasklist and listdlls execution)")
     for process_name, pid, _ in list_of_pids_with_dll:
         missing_pid = True
-        for __, formatted_pid, ___, ____ in formatted_data:
+        for _, formatted_pid, _, ___ in formatted_data:
             #if process_name == 'Registry':
-                #print(process_name, pid, _, __, formatted_pid)
+                #print(process_name, pid, , _, formatted_pid)
             if pid == formatted_pid:
                 missing_pid = False
                 break
@@ -522,15 +524,16 @@ def get_network_data(list_of_pids_dlls_handles: list):
     list_of_pids_dlls_handles_network = []
 
     for process_name, process_pid, process_dlls, process_handles in list_of_pids_dlls_handles:
-        match_found = False
+        list_of_networks_ips_connected = []
         for data_of_network in parsed_connections:
-            if process_pid == data_of_network[-1]:
-                match_found = True
+            if data_of_network[-1] == process_pid:
                 #print("MATCH")
                 #print(process_name, process_pid, data_of_network)
-                list_of_pids_dlls_handles_network.append([process_name, process_pid, process_dlls, process_handles, data_of_network])
-                break
-        if not match_found:
+                list_of_networks_ips_connected.append(data_of_network)
+                #break
+        if list_of_networks_ips_connected:
+            list_of_pids_dlls_handles_network.append([process_name, process_pid, process_dlls, process_handles, list_of_networks_ips_connected])
+        else:
             list_of_pids_dlls_handles_network.append([process_name, process_pid, process_dlls, process_handles, []])
 
     
