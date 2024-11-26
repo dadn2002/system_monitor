@@ -1,16 +1,20 @@
 import streamlit as st
 import os
 
-st.title("Graph Analysis Workflow")
+st.title("System Monitor Graphs")
 
-st.write("### Display Graph from graphs/graph.html")
+graphs_folder = "graphs/"
 
-html_file_path = "graphs/graph.html"
+graph_files = [f for f in os.listdir(graphs_folder) if f.endswith('.html')]
 
-if os.path.exists(html_file_path):
-    with open(html_file_path, "r", encoding="utf-8") as file:
+if graph_files:
+    selected_graph = st.selectbox("Select a graph to display", graph_files)
+
+    selected_graph_path = os.path.join(graphs_folder, selected_graph)
+
+    with open(selected_graph_path, "r", encoding="utf-8") as file:
         html_content = file.read()
 
     st.components.v1.html(html_content, height=600)
 else:
-    st.error(f"File not found: {html_file_path}. Make sure the file exists.")
+    st.error(f"No graph files found in the '{graphs_folder}' folder. Please make sure there are HTML files present.")
