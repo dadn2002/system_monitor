@@ -7,7 +7,7 @@
 ```bash
 python extract_data.py
 ```
-For data collection, need some programs from Sysinternals to work.
+Data collection needs some programs from Sysinternals.
 Generate `data/network_data.txt` and subproducts.
 
 ```bash
