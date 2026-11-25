@@ -13,6 +13,7 @@ data/handle_data.txt
 data/pid_data.txt
 graphs/spoon.graphml
 temp.txt
+__pycache__
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
