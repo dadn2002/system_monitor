@@ -28,7 +28,7 @@ def setup_arguments_parser() -> None:
         -enable_dlls           Enable DLLs processing.
         -disable_networks      Disable network processing.
         -ignore_list           List of processes to ignore (space separated).
-        
+
         Example:
         python generate_graphs.py -disable_handles -ignore_list lsass svchost
         """
@@ -340,8 +340,15 @@ def generate_directed_pyvis_graph(dataset: list, execution_flags: dict) -> Netwo
             if not process_networks:
                 continue
 
-            for process_network_data in process_networks:
+            if isinstance(process_networks[0], (tuple, list)):
+                iterable_networks = process_networks
+            else:
+                iterable_networks = [process_networks]
+            
+            #print(iterable_networks)
 
+            for process_network_data in iterable_networks:
+                #print(process_network_data)
                 connection_type, local_ip, remote_ip, connection_status, _ = process_network_data
 
                 # Connection is invalid/unknown or whatever

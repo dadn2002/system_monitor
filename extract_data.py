@@ -120,7 +120,7 @@ def get_pid_data():
                 # Print the result in the desired format
                 "$processName ($processId)"
             }
-        }"""   
+        }"""
     
     #----------------Extracting the data with tasklist----------------#
     info(f" Extracting list of active PIDs")
